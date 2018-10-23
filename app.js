@@ -46,8 +46,8 @@ function makeResponsive() {
 var chartGroup = svg.append("g")
 .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-console.log(margin.left);
-console.log(margin.right);
+//console.log(margin.left);
+//console.log(margin.right);
 
   d3.csv("data.csv", function(error, newsData){
   if (error) throw error;
@@ -59,10 +59,11 @@ console.log(margin.right);
     data.abbr = String(data.abbr);
    // console.log(data.poverty); //values tha go on the x axis
    // console.log(data.healthcare); //values that go on the y axis
+  
     stateLabels.push(data.abbr);
     });
     
-    console.log(stateLabels);
+    //console.log(stateLabels);
     var xLinearScale = d3.scaleLinear() //d3.extent(medalData, d => d.date) //[8, d3.max(newsData, d => d.poverty)]
     .domain([8, d3.max(newsData, d => d.poverty)])
     .range([0, width]);
@@ -83,30 +84,6 @@ console.log(margin.right);
     chartGroup.append("g")
       .call(yAxis);
 
-    
-      //attempt code
-      // var node = chartGroup.selectAll("circle").data(newsData).enter()
-      // node.append("circle").attr("cx", d => xLinearScale(d.poverty))
-      //   .attr("cy", d => yLinearScale(d.healthcare))
-      //   .attr("r", "12") //changes the radius of the circle
-      //   .attr("fill", "lightblue")
-      //   .attr("stroke-width", "1")
-      //   .attr("stroke", "black")
-      //   .attr("opacity", ".3");
-      // circlesGroup = node;
-
-
-      // fixer.append("text").text(function(d,i){
-      //   return d.abbr;
-      // });
-
-    //   node.append("text")  reference code
-    //   .text(function(d) {
-    //  if (d.data.value > 748|| d.data.Call_Type == "Other" || d.data.Call_Type == "Fire"){
-    //    return d.data.Call_Type;
-    //  }
-    //  return "";});
-
 
       
 
@@ -124,7 +101,7 @@ console.log(margin.right);
       .attr("stroke-width", "1")
       .attr("stroke", "black")
       .attr("opacity", ".3");
-    chartGroup.append("g").append("text").text(stateLabels[10]);
+    // chartGroup.append("g").append("text").text(stateLabels[10]);
       // .append("text").text(function(d,i){
       //   return d.abbr;
       //    });
@@ -145,33 +122,22 @@ console.log(margin.right);
     circlesGroup.on("mouseover", function(d) { //good code
       toolTip.show(d);
     })
-    // Step 4: Create "mouseout" event listener to hide tooltip
-    // circlesGroup.on("mouseover", function(d, i) {
-    //   toolTip.style("display", "block");
-    //   toolTip.html(`Pizzas eaten: <strong>somethin</strong>`)
-    //     .style("left", 0)
-    //     .style("top", 0);
-    // })
    
    
       .on("mouseout", function(d) {
         toolTip.hide(d);
       });
-console.log(stateLabels);
-
-      circlesGroup.append("text")
-      .text(stateLabels[1]);
-
-      // var toolTip2 = d3.tip()
-      // .attr("class", "tooltip")
-      // .offset([25, 0])
-      // .html(function(d) {
-      //   return (`${d.abbr}`);
-      // });
-      // chartGroup.call(toolTip2);  //attach to the chartgroup
-      // circlesGroup.on("mouseover", function(d) { //good code
-      //   toolTip2.show(d);
-      // })
+//console.log(stateLabels);
+var text = chartGroup;
+var text = chartGroup.selectAll("null"); 
+text.data(newsData)
+.enter()
+.append('text')
+.text(d => d.abbr)
+.attr('color', 'black')
+.attr('font-size', 12)
+.attr("x", d => xLinearScale(d.poverty)-9)
+.attr("y", d => yLinearScale(d.healthcare)+4);
      
         
 //end of reading csv file
